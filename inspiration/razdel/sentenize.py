@@ -1,21 +1,21 @@
 
 import re
 
-from lib.record import cached_property
-from lib.rule import (
+from razdel.record import cached_property
+from razdel.rule import (
     JOIN,
     FunctionRule
 )
-from lib.split import (
+from razdel.split import (
     Split,
     Splitter,
 )
 
-from lib.base import (
+from razdel.base import (
     Segmenter,
     DebugSegmenter
 )
-from lib.sokr import (
+from razdel.sokr import (
     HEAD_SOKRS,
     SOKRS,
 
@@ -24,7 +24,7 @@ from lib.sokr import (
 
     INITIALS
 )
-from lib.punct import (
+from razdel.punct import (
     ENDINGS,
     DASHES,
 
@@ -254,12 +254,14 @@ class SentSplit(Split):
     @cached_property
     def right_token(self):
         match = FIRST_TOKEN.match(self.right)
+        print('right_token:', match)
         if match:
             return match.group(1)
 
     @cached_property
     def left_token(self):
         match = LAST_TOKEN.search(self.left)
+        print('left_token:', match)
         if match:
             return match.group(1)
 
@@ -314,19 +316,19 @@ class SentSplitter(Splitter):
 
         matches = self.re.finditer(text)
 
-        # print('SentSplitter matches:', list(self.re.finditer(text)))
+        print('SentSplitter matches:', list(self.re.finditer(text)))
 
         previous = 0
         for match in matches:
-            print('match:', match)
+            # print('match:', match)
             start = match.start()
             stop = match.end()
             delimiter = match.group(1)
-            print('text before:', text[previous:start])
-            print('delimeter:', delimiter)
-            print('delimiter stop:', stop)
+            # print('text before:', text[previous:start])
+            # print('delimeter:', delimiter)
+            # print('delimiter stop:', stop)
             # print('text after:', text[previous:])
-            yield text[previous:start]
+            yield text[previous:start] # here
             left = text[max(0, start - self.window):start]
             right = text[stop:stop + self.window]
             yield SentSplit(left, delimiter, right)

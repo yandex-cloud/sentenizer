@@ -1,6 +1,6 @@
 
 
-from lib.record import Record
+from razdel.record import Record
 
 
 class Split(Record):

@@ -2,7 +2,10 @@
 import functools
 import itertools
 
-from lib.sentenize import sentenize
+#from razdel.sentenize import sentenize
+# from razdel import sentenize
+import razdel.sentenize as razdel
+from deeppavlov import ru_sent_tokenize
 
 def flatten(nested):
     return list(itertools.chain(*nested))
@@ -12,10 +15,20 @@ def compose(*functions):
         return lambda x: f(g(x))
     return functools.reduce(compose2, functions, lambda x: x)
 
-sentences = map(compose(list, sentenize), [
-# 'Верхний\^регистр^',
+paragraphs = [
+'Заказ из Яндекс.Лавки был успешно доставлен. Совсем другое предложение будет здесь.',
+'Предложение один А.С. Пушкин. Предложение два.',
+'Верхний\^регистр^',
 'ага, т. е. ты имел ввиду это?',
-])
+'Предложение один. Предложение два? Предложение три! Предложение четыре.',
+'раз\?два',
+'ага, т. е. ты имел ввиду это?',
+'Предложение один. Предложение два? Предложение три! Предложение четыре.',
+'Заказал Еду из Яндекс.Лавки. Как писал великий классик А. C. Пушкин-с: "ТЬМЫ НИЗКИХ ИСТИН МНЕ ДОРОЖЕ НАС ВОЗВЫШАЮЩИЙ ОБМАН."',
+'Есть такой классный сервис как {{ service-name }} попробуй еще захочешь',
+'Это будет первый предложением в которое не попадёт дальше идущая переменная. {{ variable-name }} второе предложение к которому относится переменная.',
+]
+
 """
 'раз\?два',
 'ага, т. е. ты имел ввиду это?',
@@ -25,7 +38,13 @@ sentences = map(compose(list, sentenize), [
 'Это будет первый предложением в которое не попадёт дальше идущая переменная. {{ variable-name }} второе предложение к которому относится переменная.',
 """
 
-print('results:', list(map(lambda x: x.text, flatten(sentences))))
+razdel = map(compose(list, razdel.sentenize), paragraphs)
+
+deeppavlov = map(compose(list, ru_sent_tokenize), paragraphs)
+
+print('razdel:', list(map(lambda x: x.text, flatten(razdel))))
+
+print('deeppavlov:', list(flatten(deeppavlov)))
 
 '''
 [

@@ -1,8 +1,8 @@
 from itertools import tee
 
-from lib.record import Record
-from lib.rule import JOIN
-from lib.substring import find_substrings
+from razdel.record import Record
+from razdel.rule import JOIN
+from razdel.substring import find_substrings
 
 
 def safe_next(iter):
@@ -29,17 +29,19 @@ class Segmenter(Record):
     def segment(self, parts):
         # print('segment, parts:', list(tee(tee(parts)[0])))
         # print('segment, parts:', list(tee(tee(parts)[1])))
+        # print('segment, parts:', list(iter(parts)))
         buffer = safe_next(parts)
         if buffer is None:
             return
 
-        print('segment, parts:', buffer)
+        print('segment, buffer:', buffer)
 
         for split in parts:
             right = next(parts)
             split.buffer = buffer
             print('segment>parts_it>split:', split)
             print('segment>parts_it>right:', right)
+            print('segment>buffer:', buffer)
             if self.join(split):
                 buffer = buffer + split.delimiter + right
             else:
@@ -53,7 +55,7 @@ class Segmenter(Record):
         print('Segmenter called with text:', text)
         print('parts:', list(self.split(text)))
         # print('chunks:', list(self.segment(self.split(text))))
-        parts = self.split(text)
+        parts = self.split(text) # call
         chunks = self.segment(parts)
         if self.post:
             chunks = self.post(chunks)
