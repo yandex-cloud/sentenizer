@@ -27,6 +27,9 @@ paragraphs = [
 'Заказал Еду из Яндекс.Лавки. Как писал великий классик А. C. Пушкин-с: "ТЬМЫ НИЗКИХ ИСТИН МНЕ ДОРОЖЕ НАС ВОЗВЫШАЮЩИЙ ОБМАН."',
 'Есть такой классный сервис как {{ service-name }} попробуй еще захочешь',
 'Это будет первый предложением в которое не попадёт дальше идущая переменная. {{ variable-name }} второе предложение к которому относится переменная.',
+'is simply dummy text of the printing and typesetting industry.\
+ Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s,\
+when an unknown printer took a galley of type and scrambled it to make a type specimen book.',
 ]
 
 """

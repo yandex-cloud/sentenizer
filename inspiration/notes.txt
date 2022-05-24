@@ -63,3 +63,5 @@ sentenize(SenSegmenter -> Segmenter)() <- string
             yield buffer + split.delimiter
             buffer = right
         yield buffer
+
+// const delimiters = /([^.?!…;]*?[.?!…;])/gmu;
