@@ -9,7 +9,6 @@
   ],
   "scripts": {
     "test": "jest",
-    "test:watch": "jest --watch --silent=false",
     "build:dev": "npm run build:dev:clean && npm run build:dev:code && npm run build:dev:types && node dist/index.js",
     "build:dev:clean": "rm -rf dist",
     "build:dev:code": "node scripts/build.dev.js",
@@ -42,5 +41,9 @@
     "prettier": "^2.6.2",
     "ts-jest": "^28.0.3",
     "typescript": "^4.6.4"
+  },
+  "dependencies": {
+    "@types/ramda": "^0.28.13",
+    "ramda": "^0.28.0"
   }
 }
