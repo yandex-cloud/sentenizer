@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-shadow */
-import {compose, split, filter, not, equals} from 'ramda';
+import {compose, map, reduce, split, filter, not, equals, and} from 'ramda';
 
 import {
     SENTENCE_END_MARKERS,
@@ -26,6 +26,7 @@ import {
     quotationClosePrefix,
     delimiterPrefix,
     bracketsClosePrefix,
+    spaces,
 } from '../src/parsers';
 
 describe('fst', () => {
@@ -377,6 +378,22 @@ describe('bracketsClosePrefix', () => {
         const input = ' Another sentence';
         const expected = '';
         const actual = bracketsClosePrefix(input);
+        expect(actual).toBe(expected);
+    });
+});
+
+describe('spaces', () => {
+    it('should extract line consisting only of spaces', () => {
+        const input = '    ';
+        const expected = '    ';
+        const actual = spaces(input);
+        expect(actual).toBe(expected);
+    });
+    it('should default to empty string', () => {
+        const go = compose(reduce(and, true), map(compose(equals(''), spaces)));
+        const input = ['', 'text', ' text', 'text '];
+        const expected = true;
+        const actual = go(input);
         expect(actual).toBe(expected);
     });
 });
