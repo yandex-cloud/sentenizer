@@ -123,6 +123,13 @@ const bracketsClosePrefixRegExp = new RegExp(bracketsClosePrefixPattern, bracket
 
 const bracketsClosePrefix = compose(defaultTo(''), snd, match(bracketsClosePrefixRegExp));
 
+// extract line consisting solely of spaces
+const spacesPattern = /^(\s+)$/;
+const spacesFlags = 'gmu';
+const spacesRegExp = new RegExp(spacesPattern, spacesFlags);
+
+const spaces = compose(defaultTo(''), fst, match(spacesRegExp));
+
 export {
     sentences,
     words,
@@ -141,4 +148,5 @@ export {
     quotationClosePrefix,
     bracketsClosePrefix,
     delimiterPrefix,
+    spaces,
 };
