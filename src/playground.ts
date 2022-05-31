@@ -1,7 +1,19 @@
+import {map} from 'ramda';
 import {sentenize} from './index';
 
 const paragraphs = [
+    '.   ',
+    'ХОРОШО Т. Е. ЭТО БЫЛ КЕК?',
+    'Он купил фрукты - яблоки, бананы, и т. д.',
+    'Заказал Еду из Яндекс.Лавки. Как писал великий классик А. C. Пушкин-с: "ТЬМЫ НИЗКИХ ИСТИН МНЕ ДОРОЖЕ НАС ВОЗВЫШАЮЩИЙ ОБМАН."',
+    "Composition of f of g will be: f . g. That's how composition sometimes represented in FP text.",
     'Заказ из Яндекс.Лавки был успешно доставлен. Совсем другое предложение будет здесь.',
+    'ага, т. е. ты имел ввиду это? . . . Continues . . . ',
+    'Это будет первый предложением в которое не попадёт дальше идущая переменная. {{ variable-name }} второе предложение к которому относится переменная.',
+    'Sentence. "Quotation" commentary on it.',
+    'Есть такой классный сервис как {{ service-name }} попробуй еще захочешь',
+    'Sentence about something. ( Additional information. ) Something else.',
+    /*
     'Предложение один А.С. Пушкин. Предложение два.',
     'Верхний^регистр^',
     'ага, т. е. ты имел ввиду это?',
@@ -12,8 +24,11 @@ const paragraphs = [
     'Заказал Еду из Яндекс.Лавки. Как писал великий классик А. C. Пушкин-с: "ТЬМЫ НИЗКИХ ИСТИН МНЕ ДОРОЖЕ НАС ВОЗВЫШАЮЩИЙ ОБМАН."',
     'Есть такой классный сервис как {{ service-name }} попробуй еще захочешь',
     'Это будет первый предложением в которое не попадёт дальше идущая переменная. {{ variable-name }} второе предложение к которому относится переменная.',
+    */
 ];
 
-const sentences = paragraphs.map(sentenize);
+console.log('input:', paragraphs);
 
-console.log(sentences);
+const sentences = map(sentenize, paragraphs);
+
+console.log('output:', sentences);
