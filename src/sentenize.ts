@@ -1,21 +1,71 @@
-/* eslint-disable security/detect-non-literal-regexp */
-import {SENTENCE_END_MARKERS} from './constants';
+/* eslint-disable security/detect-non-literal-regexp, security/detect-unsafe-regex */
+import {compose, map, trim, anyPass, zipWith, call} from 'ramda';
 
-// (not sentence end marker(s) or nothing) followed by sentence end marker(s)
-const sentencePattern = `([^${SENTENCE_END_MARKERS}]*?[${SENTENCE_END_MARKERS}]+)`;
+import {sentences, fstChars, lstChars} from './parsers';
+import {
+    spaceBothSides,
+    rightLacksSpacePrefix,
+    rightStartsWithLowercase,
+    rightDelimiterPrefix,
+    rightQuotationGenericPrefix,
+    rightQuotationClosePrefix,
+    rightBracketsClosePrefix,
+    rightOnlySpaces,
+} from './rules';
 
-const senteceFlags = 'gmu';
+// sides preprocessing before evaluation
+const leftPreprocessor = lstChars(10);
+const rightPreprocessor = fstChars(10);
+const sidesPreprocessors = [leftPreprocessor, rightPreprocessor];
 
-const sentenceRegExp = new RegExp(sentencePattern, senteceFlags);
+// conditions to join upon
+const joinCondition = anyPass([
+    spaceBothSides,
+    rightLacksSpacePrefix,
+    rightStartsWithLowercase,
+    rightDelimiterPrefix,
+    rightQuotationGenericPrefix,
+    rightQuotationClosePrefix,
+    rightBracketsClosePrefix,
+    rightOnlySpaces,
+]);
 
-const trimmer = (s: string): string => s.trim();
+const join = compose(joinCondition, zipWith(call, sidesPreprocessors));
 
-function sentences(text: string): string[] {
-    return text.split(sentenceRegExp).filter(Boolean).map(trimmer);
+// sentences processing
+// todo: think about better way to express this logic
+function processor(text: string): string[] {
+    const chunks = sentences(text);
+
+    let left;
+    const parsed = [];
+
+    for (let i = 0; i < chunks.length; i++) {
+        if (!left) {
+            left = chunks[i];
+
+            continue;
+        }
+
+        // where chunks[i] is the "right" merge candidate
+        if (join([left, chunks[i]])) {
+            left += chunks[i];
+        } else {
+            parsed.push(left);
+
+            left = chunks[i];
+        }
+    }
+
+    if (left) parsed.push(left);
+
+    return parsed;
 }
 
-function sentenize(text: string): string[] {
-    return sentences(text);
-}
+// sentences postprocessing
+// todo: (l|r)trim spaces into (l|r)trim non alpha
+const postprocessor = map(trim);
+
+const sentenize = compose(postprocessor, processor);
 
 export {sentenize};
