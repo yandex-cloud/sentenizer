@@ -20,7 +20,7 @@
     - [ ] tail
     - [ ] pairs
     - [ ] initials
-- [ ] initials
+- [x] initials
 
 ## tests
 
@@ -31,5 +31,5 @@
     - [ ] rules
         - [x] base
         - [ ] abbreviations
-        - [ ] initials
+        - [x] initials
 - [ ] big dataset (?)
