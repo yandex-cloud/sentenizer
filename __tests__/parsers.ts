@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-shadow */
-import {compose, map, reduce, split, filter, not, equals, and} from 'ramda';
+import {compose, map, reduce, split, filter, not, equals, and, or} from 'ramda';
 
 import {
     SENTENCE_END_MARKERS,
@@ -27,6 +27,7 @@ import {
     delimiterPrefix,
     bracketsClosePrefix,
     spaces,
+    dotSuffix,
 } from '../src/parsers';
 
 describe('fst', () => {
@@ -393,6 +394,23 @@ describe('spaces', () => {
         const go = compose(reduce(and, true), map(compose(equals(''), spaces)));
         const input = ['', 'text', ' text', 'text '];
         const expected = true;
+        const actual = go(input);
+        expect(actual).toBe(expected);
+    });
+});
+
+describe('dotSuffix', () => {
+    it('should extract single dot in the end of the line', () => {
+        const go = compose(reduce(and, true), map(equals('.')), map(dotSuffix));
+        const input = ['т.', 'е.', 'mr.'];
+        const expected = true;
+        const actual = go(input);
+        expect(actual).toBe(expected);
+    });
+    it('defaults to empty string', () => {
+        const go = compose(reduce(or, false), map(equals('.')), map(dotSuffix));
+        const input = ['', 'no dots', 'multiple...'];
+        const expected = false;
         const actual = go(input);
         expect(actual).toBe(expected);
     });
