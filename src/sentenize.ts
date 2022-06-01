@@ -11,6 +11,7 @@ import {
     rightQuotationClosePrefix,
     rightBracketsClosePrefix,
     rightOnlySpaces,
+    leftInitials,
 } from './rules';
 
 // sides preprocessing before evaluation
@@ -28,6 +29,7 @@ const joinCondition = anyPass([
     rightQuotationClosePrefix,
     rightBracketsClosePrefix,
     rightOnlySpaces,
+    leftInitials,
 ]);
 
 const join = compose(joinCondition, zipWith(call, sidesPreprocessors));
