@@ -8,3 +8,5 @@ export {
     rightBracketsClosePrefix,
     rightOnlySpaces,
 } from './base';
+
+export {leftInitials} from './initials';
