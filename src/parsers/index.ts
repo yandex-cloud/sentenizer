@@ -130,6 +130,13 @@ const spacesRegExp = new RegExp(spacesPattern, spacesFlags);
 
 const spaces = compose(defaultTo(''), fst, match(spacesRegExp));
 
+// extract dot in the end of the line
+const dotSuffixPattern = /[^.](\.)$/;
+const dotSuffixFlags = 'mu';
+const dotSuffixRegExp = new RegExp(dotSuffixPattern, dotSuffixFlags);
+
+const dotSuffix = compose(defaultTo(''), snd, match(dotSuffixRegExp));
+
 export {
     sentences,
     words,
@@ -149,4 +156,5 @@ export {
     bracketsClosePrefix,
     delimiterPrefix,
     spaces,
+    dotSuffix,
 };
