@@ -3,7 +3,7 @@ import {compose, map, reduce, split, filter, not, equals, and, or} from 'ramda';
 
 import {
     SENTENCE_END_MARKERS,
-    BRACKETS_CLOSE,
+    BRACKETS_CLOSE_MARKERS,
     QUOTATION_GENERIC_MARKERS,
     QUOTATION_CLOSE_MARKERS,
 } from '../src/constants';
@@ -368,7 +368,10 @@ describe('delimiterPrefix', () => {
 
 describe('bracketsClosePrefix', () => {
     it('should extract close bracket prefix', () => {
-        const brackets = compose(filter(compose(not, equals('\\'))), split(''))(BRACKETS_CLOSE);
+        const brackets = compose(
+            filter(compose(not, equals('\\'))),
+            split(''),
+        )(BRACKETS_CLOSE_MARKERS);
         for (const bracket of brackets) {
             const input = bracket + ' Another sentence';
             const actual = bracketsClosePrefix(input);

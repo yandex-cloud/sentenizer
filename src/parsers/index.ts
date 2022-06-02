@@ -5,7 +5,7 @@ import {
     SENTENCE_END_MARKERS,
     QUOTATION_GENERIC_MARKERS,
     QUOTATION_CLOSE_MARKERS,
-    BRACKETS_CLOSE,
+    BRACKETS_CLOSE_MARKERS,
     WINDOW_WIDTH,
 } from '../constants';
 
@@ -117,7 +117,7 @@ const delimiterPrefixRegExp = new RegExp(delimiterPrefixPattern, delimiterPrefix
 const delimiterPrefix = compose(defaultTo(''), snd, match(delimiterPrefixRegExp));
 
 // extract close bracket in the beging of the text
-const bracketsClosePrefixPattern = `^([${BRACKETS_CLOSE}]+)`;
+const bracketsClosePrefixPattern = `^([${BRACKETS_CLOSE_MARKERS}]+)`;
 const bracketsClosePrefixFlags = 'mu';
 const bracketsClosePrefixRegExp = new RegExp(bracketsClosePrefixPattern, bracketsClosePrefixFlags);
 
