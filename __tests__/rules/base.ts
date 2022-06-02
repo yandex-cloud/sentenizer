@@ -19,7 +19,7 @@ import {
     SENTENCE_END_MARKERS,
     QUOTATION_GENERIC_MARKERS,
     QUOTATION_CLOSE_MARKERS,
-    BRACKETS_CLOSE,
+    BRACKETS_CLOSE_MARKERS,
 } from '../../src/constants';
 
 import {
@@ -186,7 +186,7 @@ describe('rightQuotationClosePrefix', () => {
 
 describe('rightBracketsClosePrefix', () => {
     const notBackslash = compose(not, equals('\\'));
-    const brackets = compose(filter(notBackslash), split(''))(BRACKETS_CLOSE);
+    const brackets = compose(filter(notBackslash), split(''))(BRACKETS_CLOSE_MARKERS);
     it(`evaluates to true if right starts with close bracket: ${join(' | ')(brackets)}`, () => {
         const go = compose(reduce(and, true), map(rightBracketsClosePrefix));
         const left = map(always('left'), brackets);
