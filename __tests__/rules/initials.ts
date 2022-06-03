@@ -18,6 +18,7 @@ describe('leftInitials', () => {
             ['И?', 'A. C. Пушкин'],
             ['OOO.', 'Заря'],
             ['a.', 'c. пушкин'],
+            ['something like 4.', ' Wow, thats a good deal.'],
         ];
         const expected = false;
         const actual = go(input);
