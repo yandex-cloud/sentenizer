@@ -1,6 +1,14 @@
-import {split} from 'ramda';
-import {lenLte, allEqual, lengthNonZero} from '../src/utilities/list';
-import {charAt, notAlpha, startsWithLower} from '../src/utilities';
+import {compose, map, reduce, split, and, or} from 'ramda';
+
+import {
+    lenLte,
+    allEqual,
+    lengthNonZero,
+    charAt,
+    notAlpha,
+    startsWithLower,
+    hasAlpha,
+} from '../src/utilities';
 
 describe('lenLte', () => {
     it('should evaluate to true if array is less than or equal to provided value', () => {
@@ -66,5 +74,22 @@ describe('startsWithLower', () => {
             // @ts-ignore (?) no idea why types are not inferred here
             expect(startsWithLower(input[i])).toBe(expected[i]);
         }
+    });
+});
+
+describe('hasAlpha', () => {
+    it('evaluates to true if string contains alpha characters', () => {
+        const go = compose(reduce(and, true), map(hasAlpha));
+        const input = ['a16z', 'Просто текст', 'Предложение с числами 1337.'];
+        const expected = true;
+        const actual = go(input);
+        expect(actual).toBe(expected);
+    });
+    it('evaluates to false otherwise', () => {
+        const go = compose(reduce(or, false), map(hasAlpha));
+        const input = ['1337', '1984', '2019'];
+        const expected = false;
+        const actual = go(input);
+        expect(actual).toBe(expected);
     });
 });
