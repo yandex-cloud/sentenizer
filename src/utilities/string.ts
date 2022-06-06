@@ -13,4 +13,6 @@ const startsWithLower = allPass([
     compose(allEqual, juxt([identity, toLower]), charAt(0)),
 ]);
 
-export {charAt, notAlpha, hasAlpha, startsWithLower};
+const isUpper = compose(allEqual, juxt([toUpper, identity]));
+
+export {charAt, notAlpha, hasAlpha, startsWithLower, isUpper};
