@@ -8,6 +8,7 @@ import {
     notAlpha,
     startsWithLower,
     hasAlpha,
+    isUpper,
 } from '../src/utilities';
 
 describe('lenLte', () => {
@@ -88,6 +89,23 @@ describe('hasAlpha', () => {
     it('evaluates to false otherwise', () => {
         const go = compose(reduce(or, false), map(hasAlpha));
         const input = ['1337', '1984', '2019'];
+        const expected = false;
+        const actual = go(input);
+        expect(actual).toBe(expected);
+    });
+});
+
+describe('isUpper', () => {
+    it('evaluates to true if all alpha inside string are in uppercase', () => {
+        const go = compose(reduce(and, true), map(isUpper));
+        const input = ['UPPERCASE STRING', 'CAPSLOCK', 'CAPS1337L0CK'];
+        const expected = true;
+        const actual = go(input);
+        expect(actual).toBe(expected);
+    });
+    it('evaluates to false otherwise', () => {
+        const go = compose(reduce(or, false), map(isUpper));
+        const input = ['nOt uPpErCaSe', 'lowercase', 'l0w3r1337case'];
         const expected = false;
         const actual = go(input);
         expect(actual).toBe(expected);
