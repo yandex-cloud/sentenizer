@@ -10,3 +10,5 @@ export {
 } from './base';
 
 export {leftInitials} from './initials';
+
+export {leftAbbreviation, pairAbbreviation, leftPairsTailAbbreviation} from './abbreviations';
