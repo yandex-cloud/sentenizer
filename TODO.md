@@ -5,31 +5,31 @@
 - [x] naive
 - [x] quotes
 - [x] braces
-    - [x] right close brackets
+  - [x] right close brackets
 - [x] spaces
-    - [x] both sides
-    - [x] right lacks space prefix
-    - [x] right only spaces
+  - [x] both sides
+  - [x] right lacks space prefix
+  - [x] right only spaces
 - [x] right starts with lower case
 - [x] right starts with delimiter
 - [x] quotations
-    - [x] right starts with close quotation
-    - [x] right starts with generic quotation
-- [ ] abbreviations
-    - [ ] head
-    - [ ] tail
-    - [ ] pairs
-    - [ ] initials
+  - [x] right starts with close quotation
+  - [x] right starts with generic quotation
+- [x] abbreviations
+  - [x] head
+  - [x] tail
+  - [x] pairs
+  - [x] initials
 - [x] initials
 
 ## tests
 
-- [ ] e2e
-    - [x] parsers
-    - [x] utilities
-    - [x] lenses
-    - [ ] rules
-        - [x] base
-        - [ ] abbreviations
-        - [x] initials
+- [x] e2e
+  - [x] parsers
+  - [x] utilities
+  - [x] lenses
+  - [x] rules
+    - [x] base
+    - [x] abbreviations
+    - [x] initials
 - [ ] big dataset (?)
