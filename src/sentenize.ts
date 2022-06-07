@@ -12,11 +12,14 @@ import {
     rightBracketsClosePrefix,
     rightOnlySpaces,
     leftInitials,
+    leftAbbreviation,
+    pairAbbreviation,
+    leftPairsTailAbbreviation,
 } from './rules';
 
 // sides preprocessing before evaluation
-const leftPreprocessor = lstChars(10);
-const rightPreprocessor = fstChars(10);
+const leftPreprocessor = lstChars(20);
+const rightPreprocessor = fstChars(20);
 const sidesPreprocessors = [leftPreprocessor, rightPreprocessor];
 
 // conditions to join upon
@@ -30,6 +33,9 @@ const joinCondition = anyPass([
     rightBracketsClosePrefix,
     rightOnlySpaces,
     leftInitials,
+    leftAbbreviation,
+    pairAbbreviation,
+    leftPairsTailAbbreviation,
 ]);
 
 const join = compose(joinCondition, zipWith(call, sidesPreprocessors));
