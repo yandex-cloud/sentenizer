@@ -1,4 +1,4 @@
-/* eslint-disable security/detect-non-literal-regexp, security/detect-unsafe-regex */
+/* eslint-disable security/detect-non-literal-regexp, security/detect-unsafe-regex, prefer-spread, @typescript-eslint/no-shadow */
 import {compose, map, trim, anyPass, zipWith, call} from 'ramda';
 
 import {sentences, fstChars, lstChars} from './parsers';
@@ -41,39 +41,29 @@ const joinCondition = anyPass([
 const join = compose(joinCondition, zipWith(call, sidesPreprocessors));
 
 // sentences processing
-// todo: think about better way to express this logic
-function processor(text: string): string[] {
-    const chunks = sentences(text);
-
-    let left;
-    const parsed = [];
-
-    for (let i = 0; i < chunks.length; i++) {
-        if (!left) {
-            left = chunks[i];
-
-            continue;
-        }
-
-        // where chunks[i] is the "right" merge candidate
-        if (join([left, chunks[i]])) {
-            left += chunks[i];
-        } else {
-            parsed.push(left);
-
-            left = chunks[i];
-        }
+function processor(
+    splits: string[],
+    sentences: string[] = new Array<string>(),
+    left = '',
+    i = 0,
+): string[] {
+    if (!splits[i]) {
+        return left ? [...sentences, left] : sentences;
     }
 
-    if (left) parsed.push(left);
+    if (!left) return processor(splits, sentences, splits[i], i + 1);
 
-    return parsed;
+    const parameters = join([left, splits[i]])
+        ? [splits, sentences, left + splits[i], i + 1]
+        : [splits, [...sentences, left], splits[i], i + 1];
+
+    return processor.apply(null, parameters);
 }
 
 // sentences postprocessing
 // todo: (l|r)trim spaces into (l|r)trim non alpha
 const postprocessor = map(trim);
 
-const sentenize = compose(postprocessor, processor);
+const sentenize = compose(postprocessor, processor, sentences);
 
 export {sentenize};
