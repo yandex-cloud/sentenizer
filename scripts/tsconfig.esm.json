@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "moduleResolution":"node",
     "lib": ["ES2020"],
     "module": "ES2020",
     "target": "es2020",
@@ -7,7 +8,7 @@
     "emitDeclarationOnly": true,
     "esModuleInterop": true,
     "strict": true,
-    "noImplicitAny": true,
+    "noImplicitAny": false,
     "skipLibCheck": true,
     "baseUrl": "../",
     "rootDir": "../src",
