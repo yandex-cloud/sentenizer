@@ -38,15 +38,14 @@ const joinCondition = anyPass([
     leftPairsTailAbbreviation,
 ]);
 
-const join = compose(joinCondition, zipWith(call, sidesPreprocessors));
+const join = compose(joinCondition, zipWith<any, any, any>(call, sidesPreprocessors));
 
 // sentences processing
-// todo: think about better way to express this logic
 function processor(text: string): string[] {
     const chunks = sentences(text);
 
-    let left;
-    const parsed = [];
+    let left: string | null = null;
+    const parsed: string[] = [];
 
     for (let i = 0; i < chunks.length; i++) {
         if (!left) {
@@ -71,7 +70,6 @@ function processor(text: string): string[] {
 }
 
 // sentences postprocessing
-// todo: (l|r)trim spaces into (l|r)trim non alpha
 const postprocessor = map(trim);
 
 const sentenize = compose(postprocessor, processor);
