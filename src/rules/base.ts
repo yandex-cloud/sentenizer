@@ -19,7 +19,7 @@ const isSpacePrefix = compose(lengthNonZero, spacePrefix);
 // determine if delimiter surronded by spaces on both sides
 const spaceBothSides = compose(
     all(Boolean),
-    zipWith(call, [isSpaceSuffix, isSpacePrefix]),
+    zipWith<any, any, any>(call, [isSpaceSuffix, isSpacePrefix]),
     map(words),
 );
 

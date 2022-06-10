@@ -11,6 +11,7 @@ import {
     allPass,
     anyPass,
     toLower,
+    Pred,
 } from 'ramda';
 
 import {
@@ -37,22 +38,25 @@ const hash = compose(toLower, join('.'));
 
 // pair abbreviations join
 const insidePairAbbreviationMap = anyPass([
-    prop(__, HEAD_PAIR),
-    prop(__, TAIL_PAIR),
-    prop(__, OTHER_PAIR),
+    prop(__, HEAD_PAIR) as Pred<any[]>,
+    prop(__, TAIL_PAIR) as Pred<any[]>,
+    prop(__, OTHER_PAIR) as Pred<any[]>,
 ]);
 
 // abbreviation pair test
 const isPairAbbreviation = compose(
     insidePairAbbreviationMap,
     hash,
-    zipWith(call, [compose(lstWord, lstToken), compose(fstWord, fstToken)]),
+    zipWith<any, any, any>(call, [compose(lstWord, lstToken), compose(fstWord, fstToken)]),
 );
 
 // pair abbreviation conditions:
 //     * separated by dot
 //     * hashed words from adjacent sides are known abbreviation pairs
-const pairAbbreviation = allPass([compose(isDotDelimiter, lstToken, fst), isPairAbbreviation]);
+const pairAbbreviation = allPass([
+    compose(isDotDelimiter, lstToken, fst),
+    isPairAbbreviation as Pred<any[]>,
+]);
 
 // tail abbreviation join
 const insideAbbreviationMap = anyPass([
@@ -97,7 +101,7 @@ const isLeftPairsTail = (left) => {
 //     * right word starts with lowercase or entirely in uppercase
 const leftPairsTailAbbreviation = allPass([
     compose(isDotDelimiter, lstToken, fst),
-    compose(isLeftPairsTail, fst),
+    compose(isLeftPairsTail, fst) as Pred<any[]>,
     rightLowercaseOrCaps,
 ]);
 
