@@ -1,7 +1,19 @@
 {
-  "name": "sentenizer",
+  "name": "@doc-tools/sentenizer",
   "version": "0.0.0",
-  "description": "sentence splitter",
+  "description": "text segmentation into sentences",
+  "homepage": "https://github.com/yandex-cloud/sentenizer#readme",
+  "bugs": {
+    "url": "https://github.com/yandex-cloud/sentenizer/issues",
+    "email": "moki-codes@yandex-team.ru"
+  },
+  "keywords": [
+    "nlp",
+    "parser",
+    "tokenization",
+    "sentence-segmentation",
+    "russian"
+  ],
   "main": "./lib/cjs/index.js",
   "module": "./lib/esm/index.js",
   "files": [
